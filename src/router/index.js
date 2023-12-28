@@ -9,7 +9,8 @@ export const routes = [
     meta: { isMenu: true, title: 'Demos' },
     children: [
       { path: 'home', component: () => import('@/views/home.vue') },
-      { path: 'test', component: () => import('@/views/test.vue') },
+      { path: 'basic', component: () => import('@/views/basic.vue') },
+      { path: 'simple', component: () => import('@/views/simple.vue') },
     ]
   }
 ]
