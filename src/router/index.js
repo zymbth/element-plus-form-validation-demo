@@ -11,6 +11,7 @@ export const routes = [
       { path: 'home', component: () => import('@/views/home.vue') },
       { path: 'basic', component: () => import('@/views/basic.vue') },
       { path: 'simple', component: () => import('@/views/simple.vue') },
+      { path: 'inline-validate', component: () => import('@/views/inline-validate.vue') },
     ]
   }
 ]
