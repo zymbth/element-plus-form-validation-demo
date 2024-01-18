@@ -34,6 +34,27 @@ function resetForm(formEl) {
   if (!formEl) return
   formEl.resetFields()
 }
+const codeStr = `<el-form ref="formRef" :model="formData" :rules="baseRules">
+  <el-form-item label="医生名称" prop="name">
+    <el-input v-model="formData.name" />
+  </el-form-item>
+  <el-form-item label="医院" prop="hospital">
+    <el-select v-model="formData.hospital">
+      <el-option v-for="h in hospitals" v-bind="h" />
+    </el-select>
+  </el-form-item>
+  <el-form-item label="性别" prop="gender">
+    <el-radio-group v-model="formData.gender">
+      <el-radio label="male">男</el-radio>
+      <el-radio label="female">女</el-radio>
+      <el-radio label="unknown">未知</el-radio>
+    </el-radio-group>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
+    <el-button @click="resetForm(formRef)">Reset</el-button>
+  </el-form-item>
+</el-form>`
 </script>
 <template>
   <div>
@@ -60,5 +81,7 @@ function resetForm(formEl) {
         <el-button @click="resetForm(formRef)">Reset</el-button>
       </el-form-item>
     </el-form>
+    <hr />
+    <highlightjs language='html' :code="codeStr" />
   </div>
 </template>
