@@ -1,12 +1,10 @@
 <script setup>
-// import SidebarComp from './sidebar/index.vue'
+import SidebarComp from './sidebar/index.vue'
 </script>
 <template>
   <nav class="stickynav">
     <div class="nav-links">
       <router-link to="/">Home</router-link>
-      <!-- <router-link to="/echarts">Echarts</router-link>
-      <router-link to="/d3">D3</router-link> -->
     </div>
     <a
       class="github-link"
@@ -25,7 +23,7 @@
       </transition>
     </router-view>
   </section>
-  <!-- <SidebarComp class="sidebar" /> -->
+  <SidebarComp class="sidebar" />
 </template>
 <style lang="scss" scoped>
 .stickynav {
