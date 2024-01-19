@@ -22,7 +22,7 @@ function resolveRoutePath(...paths) {
     } else if (path.startsWith('/')) {
       resolvedPath = path
     } else {
-      resolvedPath = `${resolvedPath}/${path}`
+      resolvedPath += resolvedPath === '/' ? path : '/' + path
     }
   }
 

@@ -75,7 +75,7 @@ const codeStr = `<el-form ref="formRef" :model="formData" :show-message="false">
         <el-button @click="resetForm(formRef)">Reset</el-button>
       </el-form-item>
     </el-form>
+    <hr />
+    <highlightjs language="html" :code="codeStr" />
   </div>
-  <hr />
-  <highlightjs language="html" :code="codeStr" />
 </template>
