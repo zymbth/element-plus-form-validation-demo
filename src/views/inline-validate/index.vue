@@ -1,5 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
+import intro from './intro.md?raw'
+import MDViewer from '@/components/md-viewer.vue'
 
 const formRef = ref()
 const formData = reactive({
@@ -28,32 +30,6 @@ function resetForm(formEl) {
   if (!formEl) return
   formEl.resetFields()
 }
-const codeStr = `<el-form ref="formRef" :model="formData" :rules="baseRules">
-  <el-form-item label="名称" prop="name">
-    <el-input v-model="formData.name" />
-  </el-form-item>
-  <el-form-item label="性别" prop="gender">
-    <el-radio-group v-model="formData.gender">
-      <el-radio label="male">男</el-radio>
-      <el-radio label="female">女</el-radio>
-      <el-radio label="unknown">产前</el-radio>
-    </el-radio-group>
-  </el-form-item>
-  <el-form-item
-    label="年龄"
-    prop="age"
-    :rules="{
-      required: formData.gender !== 'unknown',
-      message: '请输入年龄',
-      trigger: 'change',
-    }">
-    <el-input v-model="formData.age" />
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
-    <el-button @click="resetForm(formRef)">Reset</el-button>
-  </el-form-item>
-</el-form>`
 </script>
 <template>
   <div>
@@ -86,6 +62,6 @@ const codeStr = `<el-form ref="formRef" :model="formData" :rules="baseRules">
       </el-form-item>
     </el-form>
     <hr />
-    <highlightjs language="html" :code="codeStr" />
+    <MDViewer :raw-data="intro" />
   </div>
 </template>
