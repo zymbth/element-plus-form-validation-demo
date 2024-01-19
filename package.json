@@ -15,6 +15,7 @@
     "highlight.js": "^11.9.0",
     "marked": "^11.1.1",
     "vue": "^3.3.11",
+    "vue-highlight.js": "^3.1.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
