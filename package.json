@@ -12,6 +12,7 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "element-plus": "^2.4.4",
+    "github-markdown-css": "^5.5.0",
     "highlight.js": "^11.9.0",
     "marked": "^11.1.1",
     "vue": "^3.3.11",

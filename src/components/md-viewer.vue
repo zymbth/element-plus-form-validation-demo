@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { marked } from 'marked'
 import hljs from 'highlight.js/lib/core'
 
@@ -11,15 +11,17 @@ import hljs from 'highlight.js/lib/core'
 
 const props = defineProps(['rawData'])
 
+const mdViewerRef = ref()
+
 onMounted(() => {
-  document.querySelectorAll('pre code').forEach(el => {
+  mdViewerRef.value.querySelectorAll('pre code').forEach(el => {
     hljs.highlightElement(el)
   })
 })
 
 </script>
 <template>
-  <div v-html="marked.parse(rawData)" />
+  <div ref="mdViewerRef" class="markdown-body" v-html="marked.parse(rawData)" />
 </template>
 <style lang="scss" scoped>
 :deep table {

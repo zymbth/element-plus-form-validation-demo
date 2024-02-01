@@ -1,6 +1,8 @@
-### 代码
+### 表单验证方法（`validate`）的使用
 
-#### 验证结果
+下面介绍 `element-plus` 表单组件方法 `validate` 的使用，详情参考 [ElForm源码](https://github.com/element-plus/element-plus/blob/dev/packages/components/form/src/form.vue)
+
+#### 一、验证结果说明
 
 `elForm.validate` 验证结果包括两部分
 
@@ -13,12 +15,14 @@
 
 ---
 
-#### 执行校验并获取验证结果
+#### 二、校验表单并获取验证结果
 
 `elForm.validate` 方法支持两种方式获取校验结果:
 
 - 一种是传入一个回调函数
 - 另一种是返回一个 `Promise` 对象
+
+详见 `ElForm` 源码或文末的源码片段
 
 ##### 1. `validate` 回调函数
 
@@ -149,3 +153,48 @@ async function submitForm(formEl) {
   }
 }
 ```
+
+#### 三、validate源码
+
+> [ElForm源码](https://github.com/element-plus/element-plus/blob/dev/packages/components/form/src/form.vue)
+
+第二部分中说到两种方法在源码中很清晰，可直接进入查看。此处截取 `validate` 方法相关源码，并去除ts相关语法：
+
+```js
+const validate = async callback => validateField(undefined, callback)
+
+const doValidateField = async (props = []) => {
+  if (!isValidatable.value) return false
+
+  const fields = obtainValidateFields(props)
+  if (fields.length === 0) return true
+
+  let validationErrors = {}
+  for (const field of fields) {
+    try {
+      await field.validate('')
+    } catch (fields) {
+      validationErrors = { ...validationErrors, ...fields }
+    }
+  }
+
+  if (Object.keys(validationErrors).length === 0) return true
+  return Promise.reject(validationErrors)
+}
+
+const validateField = async (modelProps = [], callback) => {
+  const shouldThrow = !isFunction(callback)
+  try {
+    const result = await doValidateField(modelProps)
+    // When result is false meaning that the fields are not validatable
+    if (result === true) callback?.(result)
+    return result
+  } catch (e) {
+    if (e instanceof Error) throw e
+    callback?.(false, e)
+    return shouldThrow && Promise.reject(e)
+  }
+}
+```
+
+注意看 `validateField` 方法，存在有效的 `callback` 时，不会抛出异常

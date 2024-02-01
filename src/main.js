@@ -10,6 +10,8 @@ import xml from 'highlight.js/lib/languages/xml'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 // import vue from 'vue-highlight.js/lib/languages/vue'
 
+import ('github-markdown-css/github-markdown.css')
+
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('html', xml)
 // hljs.registerLanguage('vue', vue)
