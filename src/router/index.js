@@ -5,10 +5,11 @@ export const routes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/home',
+    name: 'Home',
     meta: { isMenu: true, title: 'Intro' },
     children: [
-      { path: 'home', meta: { title: '首页' }, component: () => import('@/views/home/index.vue') },
+      { path: '', meta: { title: '首页' }, component: () => import('@/views/index.vue') },
+      { path: 'form-api', meta: { title: '表单相关API' }, component: () => import('@/views/home/index.vue') },
       {
         path: 'execution',
         meta: { title: '验证方法使用' },
@@ -19,22 +20,24 @@ export const routes = [
   {
     path: '/demo',
     component: Layout,
+    name: 'Demo',
     meta: { isMenu: true, title: 'Demo list' },
     children: [
+      { path: '', component: () => import('@/views/demo/index.vue') },
       {
         path: 'basic',
         meta: { title: '基本示例' },
         component: () => import('@/views/demo/basic/index.vue'),
       },
       {
+        path: 'inline-validate',
+        meta: { title: '行内验证' },
+        component: () => import('@/views/demo/inline-validate/index.vue'),
+      },
+      {
         path: 'simple',
         meta: { title: '极简使用' },
         component: () => import('@/views/demo/simple/index.vue'),
-      },
-      {
-        path: 'inline-validate',
-        meta: { title: '行内验证' },
-        component: () => import('@/views/inline-validate/index.vue'),
       },
     ],
   },

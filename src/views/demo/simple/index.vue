@@ -12,13 +12,20 @@ const formData = reactive({
 
 async function submitForm(formEl) {
   if (!formEl) return
-  formEl.validate(valid => {
-    if (valid) {
-      ElMessage({ type: 'success', message: 'submit!' })
-    } else {
-      ElMessage({ type: 'error', message: 'error submit!' })
-    }
+  let valid, invalidFields
+  await formEl.validate((vd, err) => {
+    valid = vd
+    invalidFields = err
   })
+  if (valid) {
+    ElMessage({ type: 'success', message: 'submit!' })
+  } else {
+    console.log('invalidFields: ', invalidFields)
+    ElMessage({
+      type: 'error',
+      message: '以下信息必填：' + Object.keys(invalidFields).join('、')
+    })
+  }
 }
 function resetForm(formEl) {
   if (!formEl) return
@@ -29,7 +36,7 @@ function resetForm(formEl) {
   <div>
     <h3>Demo: 基本表单验证</h3>
     <p><i>极简的表单验证，以最少的配置完成校验</i></p>
-    <el-form ref="formRef" :model="formData" :show-message="false">
+    <el-form class="simple-form" ref="formRef" :model="formData" :show-message="false">
       <el-form-item label="医生名称" prop="name" required>
         <el-input v-model="formData.name" />
       </el-form-item>
@@ -55,3 +62,9 @@ function resetForm(formEl) {
     <MDViewer :raw-data="intro" />
   </div>
 </template>
+<style>
+.simple-form .el-form-item.is-error .el-form-item__label {
+  color: var(--el-color-danger);
+  font-weight: bold;
+}
+</style>

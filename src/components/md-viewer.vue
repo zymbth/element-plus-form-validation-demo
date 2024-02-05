@@ -7,6 +7,12 @@ import hljs from 'highlight.js/lib/core'
  * markdown file viewer
  *
  * @prop {string} rawData - markdown file content
+ * @example
+ * // 引入组件及markdown文档raw数据
+ * import intro from './intro.md?raw'
+ * import MDViewer from '@/components/md-viewer.vue'
+ * // 组件属性绑定
+ * <MDViewer :raw-data="intro" />
  */
 
 const props = defineProps(['rawData'])

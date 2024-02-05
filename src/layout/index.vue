@@ -5,6 +5,7 @@ import SidebarComp from './sidebar/index.vue'
   <nav class="stickynav">
     <div class="nav-links">
       <router-link to="/">Home</router-link>
+      <router-link to="/demo">Demo</router-link>
     </div>
     <a
       class="github-link"

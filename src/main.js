@@ -7,6 +7,7 @@ import hljs from 'highlight.js/lib/core'
 // import 'highlight.js/lib/common'
 import javascript from 'highlight.js/lib/languages/javascript'
 import xml from 'highlight.js/lib/languages/xml'
+import css from 'highlight.js/lib/languages/css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 // import vue from 'vue-highlight.js/lib/languages/vue'
 
@@ -14,6 +15,7 @@ import ('github-markdown-css/github-markdown.css')
 
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('html', xml)
+hljs.registerLanguage('css', css)
 // hljs.registerLanguage('vue', vue)
 
 const app = createApp(App)
