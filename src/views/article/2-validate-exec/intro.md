@@ -1,8 +1,8 @@
-### 表单验证方法（`validate`）的使用
+# 表单验证方法（`validate`）的使用
 
 下面介绍 `element-plus` 表单组件方法 `validate` 的使用，详情参考 [ElForm源码](https://github.com/element-plus/element-plus/blob/dev/packages/components/form/src/form.vue)
 
-#### 一、验证结果说明
+## 一、验证结果说明
 
 `elForm.validate` 验证结果包括两部分
 
@@ -13,9 +13,7 @@
 | `valid` | `true` | `false` \| `undefined` |
 | `invalidFields` | `undefined` | `object`(`Record<string, Array>`) |
 
----
-
-#### 二、校验表单并获取验证结果
+## 二、校验表单并获取验证结果
 
 `elForm.validate` 方法支持两种方式获取校验结果:
 
@@ -24,7 +22,7 @@
 
 详见 `ElForm` 源码或文末的源码片段
 
-##### 1. `validate` 回调函数
+### 1. `validate` 回调函数
 
 传递一个回调函数给 `elForm.validate` 方法，回调函数的参数有两个
 
@@ -43,7 +41,7 @@ function submitForm(formEl) {
 
 **注意**：验证未通过时，该方法不会抛出异常
 
-##### 2. `validate` 期约
+### 2. `validate` 期约
 
 处理 `elForm.validate()` 返回的期约，并获取验证结果：
 
@@ -63,9 +61,7 @@ function submitForm(formEl) {
 
 **注意**：`elForm.validate()` 返回的 `Promise` 如果未 `catch` 异常，验证未通过时会抛出错误，中断程序执行
 
----
-
-##### 使用 `async...await...` 获取验证结果
+### 使用 `async...await...` 获取验证结果
 
 > 以下仅作示例，风格与喜好因人而异
 
@@ -154,7 +150,7 @@ async function submitForm(formEl) {
 }
 ```
 
-#### 三、validate源码
+## 三、validate源码
 
 > [ElForm源码](https://github.com/element-plus/element-plus/blob/dev/packages/components/form/src/form.vue)
 

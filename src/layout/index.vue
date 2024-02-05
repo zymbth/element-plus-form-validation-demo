@@ -4,7 +4,7 @@ import SidebarComp from './sidebar/index.vue'
 <template>
   <nav class="stickynav">
     <div class="nav-links">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">Article</router-link>
       <router-link to="/demo">Demo</router-link>
     </div>
     <a

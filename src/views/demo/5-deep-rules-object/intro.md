@@ -86,31 +86,33 @@ function resetForm(formEl) {
         {
           type: 'array',
           required: !formData.noMail,
-          defaultField: {
-            type: 'object',
-            fields: {
-              reciever: { required: true, message: '请输入收件人' },
-              recieveTel: [
-                { required: true, message: '请输入收件人电话' },
-                { pattern: regTelPhone, message: '电话格式不正确' },
-              ],
-              address: {
+          defaultField: !formData.noMail
+            ? {
                 type: 'object',
-                required: true,
-                message: '请输入地址信息',
                 fields: {
-                  area: {
-                    type: 'array',
+                  reciever: { required: true, message: '请输入收件人' },
+                  recieveTel: [
+                    { required: true, message: '请输入收件人电话' },
+                    { pattern: regTelPhone, message: '电话格式不正确' },
+                  ],
+                  address: {
+                    type: 'object',
                     required: true,
-                    len: 3,
-                    message: '请选择地址区划',
-                    defaultField: { required: true, message: '缺少区域码' },
+                    message: '请输入地址信息',
+                    fields: {
+                      area: {
+                        type: 'array',
+                        required: true,
+                        len: 3,
+                        message: '请选择地址区划',
+                        defaultField: { required: true, message: '缺少区域码' },
+                      },
+                      detail: { required: true, message: '请输入详细地址' },
+                    },
                   },
-                  detail: { required: true, message: '请输入详细地址' },
                 },
-              },
-            },
-          },
+              }
+            : undefined,
         },
       ]">
       <div

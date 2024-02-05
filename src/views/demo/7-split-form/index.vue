@@ -3,11 +3,13 @@ import { ref, reactive } from 'vue'
 import intro from './intro.md?raw'
 import MDViewer from '@/components/md-viewer.vue'
 import elementChinaAreaData from 'https://cdn.skypack.dev/element-china-area-data@5.0.2'
+import SubForm from './sub-form.vue'
 
 const regTelPhone = /(^((\+86)|(86))?(1[3-9])\d{9}$)|(^(0\d{2,3})-?(\d{7,8})$)/
 
 const count = ref(1)
 const formRef = ref()
+const subFormRef = ref()
 const formData = reactive({
   noMail: undefined, // 不邮寄
   formMails: [
@@ -46,6 +48,7 @@ function deleteMail(index) {
 
 function submitForm(formEl) {
   if (!formEl) return
+  console.log(subFormRef.value[0].formRef)
   formEl.validate(valid => {
     if (valid) {
       ElMessage({ type: 'success', message: 'submit!' })
@@ -88,39 +91,7 @@ function resetForm(formEl) {
       <el-form-item
         label-width="0"
         prop="formMails"
-        :rules="[
-          {
-            type: 'array',
-            required: !formData.noMail,
-            defaultField: !formData.noMail
-              ? {
-                  type: 'object',
-                  fields: {
-                    reciever: { required: true, message: '请输入收件人' },
-                    recieveTel: [
-                      { required: true, message: '请输入收件人电话' },
-                      { pattern: regTelPhone, message: '电话格式不正确' },
-                    ],
-                    address: {
-                      type: 'object',
-                      required: true,
-                      message: '请输入地址信息',
-                      fields: {
-                        area: {
-                          type: 'array',
-                          required: true,
-                          len: 3,
-                          message: '请选择地址区划',
-                          defaultField: { required: true, message: '缺少区域码' },
-                        },
-                        detail: { required: true, message: '请输入详细地址' },
-                      },
-                    },
-                  },
-                }
-              : undefined,
-          },
-        ]">
+        :rules="[{ required: !formData.noMail, type: 'array', message: '请添加邮寄地址' }]">
         <div
           v-show="!formData.noMail"
           v-for="(formMail, idx) in formData.formMails"
@@ -131,22 +102,7 @@ function resetForm(formEl) {
               <div class="btn-delete">×</div>
             </template>
           </el-popconfirm>
-          <el-form-item label="收件人">
-            <el-input v-model="formMail.reciever" style="width: 200px" />
-          </el-form-item>
-          <el-form-item label="收件号码">
-            <el-input v-model="formMail.recieveTel" placeholder="" style="width: 200px" />
-          </el-form-item>
-          <el-form-item label="收件地址">
-            <div>
-              <el-cascader
-                :options="elementChinaAreaData.regionData"
-                v-model="formMail.address.area" />
-            </div>
-          </el-form-item>
-          <el-form-item label="详细地址">
-            <el-input v-model="formMail.address.detail" />
-          </el-form-item>
+          <SubForm v-model="formData.formMails[idx]" ref="subFormRef" />
         </div>
       </el-form-item>
       <el-form-item>
