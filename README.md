@@ -1,7 +1,20 @@
-# Vue 3 + Vite
+# Demo list: element-plus' form validation
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+> 博文：[element-plus 表单验证使用 个人总结](https://blog.csdn.net/ymzhaobth/article/details/120820053)
 
-## Recommended IDE Setup
+本项目主要内容为：表单验证介绍、使用、实例
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+已部署到 Github Page [Go](https://zymbth.github.io/element-plus-form-validation-demo/)
+
+## 本地运行
+
+```bash
+git clone https://github.com/zymbth/element-plus-form-validation-demo.git
+
+cd element-plus-form-validation-demo
+
+yarn install # npm install
+
+yarn dev # npm run dev
+
+```
