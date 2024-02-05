@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-// import { routes } from '@/router'
+import { routes } from '@/router'
 import RoutePageUl from '@/components/route-page-ul.vue'
 
 const collapsed = ref(true)
@@ -9,15 +9,10 @@ const collapsed = ref(true)
   <div class="sidebar-wrapper" :class="{ collapsed }">
     <!-- 展开 - 列表 -->
     <div class="sidebar-cont" v-if="!collapsed">
-      <label>Demo list:</label>
-      <RoutePageUl
-        :routes="
-          $router.options.routes.find(r => r.path === '/')?.children.filter(r => r.path !== 'home')
-        " />
-      <!-- <div v-for="route in routes.filter(r => r.meta?.isMenu)" :key="route.path">
+      <div v-for="route in routes.filter(r => r.meta?.isMenu)" :key="route.path">
         <label>{{ route.meta?.title }}</label>
         <RoutePageUl :routes="route.children" :basePath="route.path" />
-      </div> -->
+      </div>
       <div class="sidebar-close-icon" @click="collapsed = true">+</div>
     </div>
     <!-- 收缩 - 图标 -->

@@ -19,18 +19,19 @@ const baseRules = {
 
 function submitForm1(formEl) {
   if (!formEl) return
+  // 1. 传入回调函数
   formEl.validate((valid, invalidFields) => {
     if (valid) {
       ElMessage({ type: 'success', message: 'submit!' })
     } else {
       console.log('invalidFields: ', invalidFields)
       ElMessage({ type: 'error', message: 'error submit!' })
-      return false
     }
   })
 }
 function submitForm2(formEl) {
   if (!formEl) return
+  // 2. 处理返回的 Promise
   formEl
     .validate()
     .then(valid => {
@@ -44,7 +45,23 @@ function submitForm2(formEl) {
 async function submitForm3(formEl) {
   if (!formEl) return
   let valid, invalidFields
+  // 3. async...await... & callback
+  await formEl.validate((vd, err) => {
+    valid = vd
+    invalidFields = err
+  })
+  if (valid) {
+    ElMessage({ type: 'success', message: 'submit!' })
+  } else {
+    console.log('invalidFields: ', invalidFields)
+    ElMessage({ type: 'error', message: 'error submit!' })
+  }
+}
+async function submitForm4(formEl) {
+  if (!formEl) return
+  let valid, invalidFields
   try {
+    // 4. async...await... & Promise
     valid = await formEl.validate()
   } catch (error) {
     invalidFields = error
@@ -54,20 +71,20 @@ async function submitForm3(formEl) {
   } else {
     console.log('invalidFields: ', invalidFields)
     ElMessage({ type: 'error', message: 'error submit!' })
-    return false
   }
 }
-async function submitForm4(formEl) {
+async function submitForm5(formEl) {
   if (!formEl) return
+  // 5. async...await...(封装异常捕捉) & Promise
   const { resp: valid, err: invalidFields } = await asyncFuncWrapper(formEl.validate)
   if (valid) {
     ElMessage({ type: 'success', message: 'submit!' })
   } else {
     console.log('invalidFields: ', invalidFields)
     ElMessage({ type: 'error', message: 'error submit!' })
-    return false
   }
 }
+
 function resetForm(formEl) {
   if (!formEl) return
   formEl.resetFields()

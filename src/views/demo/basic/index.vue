@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { asyncFuncWrapper } from '@/utils/utils'
 import intro from './intro.md?raw'
 import MDViewer from '@/components/md-viewer.vue'
 
@@ -11,14 +10,21 @@ const formData = reactive({
   gender: '',
 })
 
-async function submitForm(formEl) {
+const baseRules = {
+  name: [{ required: true, message: '请输入医生名称', trigger: 'blur' }],
+  gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
+  hospital: [{ required: true, message: '请选择医院', trigger: 'change' }],
+}
+
+function submitForm(formEl) {
   if (!formEl) return
-  const { resp: ck, err } = await asyncFuncWrapper(formEl.validate)
-  if (!ck) {
-    ElMessage({ type: 'error', message: 'error submit!' })
-    return
-  }
-  ElMessage({ type: 'success', message: 'submit!' })
+  formEl.validate(valid => {
+    if (valid) {
+      ElMessage({ type: 'success', message: 'submit!' })
+    } else {
+      ElMessage({ type: 'error', message: 'error submit!' })
+    }
+  })
 }
 function resetForm(formEl) {
   if (!formEl) return
@@ -28,18 +34,18 @@ function resetForm(formEl) {
 <template>
   <div>
     <h3>Demo: 基本表单验证</h3>
-    <p><i>极简的表单验证，以最少的配置完成校验</i></p>
-    <el-form ref="formRef" :model="formData" :show-message="false">
-      <el-form-item label="医生名称" prop="name" required>
+    <p><i>进行最基本且规范的表单验证</i></p>
+    <el-form ref="formRef" :model="formData" :rules="baseRules">
+      <el-form-item label="医生名称" prop="name">
         <el-input v-model="formData.name" />
       </el-form-item>
-      <el-form-item label="医院" prop="hospital" required>
+      <el-form-item label="医院" prop="hospital">
         <el-select v-model="formData.hospital">
           <el-option value="H00001" label="北京协和医院" />
           <el-option value="H00002" label="上海协和医院" />
         </el-select>
       </el-form-item>
-      <el-form-item label="性别" prop="gender" required>
+      <el-form-item label="性别" prop="gender">
         <el-radio-group v-model="formData.gender">
           <el-radio label="male">男</el-radio>
           <el-radio label="female">女</el-radio>

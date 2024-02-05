@@ -55,7 +55,6 @@ function submitForm(formEl) {
       ElMessage({ type: 'success', message: 'submit!' })
     } else {
       ElMessage({ type: 'error', message: 'error submit!' })
-      return false
     }
   })
 }
