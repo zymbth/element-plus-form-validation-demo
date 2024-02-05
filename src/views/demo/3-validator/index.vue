@@ -13,6 +13,13 @@ const formData = reactive({
 const baseRules = {
   name: [{ required: true, message: '请输入患者名称', trigger: 'blur' }],
   gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
+  age: [{ required: true, validator: validateAge, trigger: 'change' }],
+}
+
+function validateAge(rule, value, callback) {
+  if (!value && value !== 0) callback(new Error('请输入年龄'))
+  else if (isNaN(Number(value))) callback(new Error('请输入数字'))
+  else callback()
 }
 
 function submitForm(formEl) {
@@ -32,28 +39,20 @@ function resetForm(formEl) {
 </script>
 <template>
   <div>
-    <h3>Demo: 表单验证 - 单项验证</h3>
-    <p><i>可在表单的项 (<code>&lt;el-form-item&gt;</code>) 中单独设置验证规则</i></p>
+    <h3>Demo: 表单验证 - 自定义表单验证</h3>
+    <p><i>可使用 (<code>validator</code>) 设置自定义的表单验证方法</i></p>
     <el-form ref="formRef" :model="formData" :rules="baseRules">
       <el-form-item label="名称" prop="name">
-        <el-input v-model="formData.name" />
+        <el-input v-model="formData.name" style="width: 200px"/>
       </el-form-item>
       <el-form-item label="性别" prop="gender">
         <el-radio-group v-model="formData.gender">
           <el-radio label="male">男</el-radio>
           <el-radio label="female">女</el-radio>
-          <el-radio label="unknown">产前</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item
-        label="年龄"
-        prop="age"
-        :rules="{
-          required: formData.gender !== 'unknown',
-          message: '请输入年龄',
-          trigger: 'change',
-        }">
-        <el-input v-model="formData.age" />
+      <el-form-item label="年龄" prop="age">
+        <el-input v-model="formData.age" style="width: 200px"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm(formRef)">Submit</el-button>
