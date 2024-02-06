@@ -19,9 +19,9 @@ function submitForm(formEl) {
   if (!formEl) return
   formEl.validate(valid => {
     if (valid) {
-      ElMessage({ type: 'success', message: 'submit!' })
+      ElMessage({ type: 'success', message: '验证通过' })
     } else {
-      ElMessage({ type: 'error', message: 'error submit!' })
+      ElMessage({ type: 'error', message: '验证失败' })
     }
   })
 }

@@ -30,19 +30,8 @@ const baseRules = {
   'address.detail': [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
 }
 
-function submitForm(formEl) {
-  if (!formEl) return
-  formEl.validate(valid => {
-    if (valid) {
-      ElMessage({ type: 'success', message: 'submit!' })
-    } else {
-      ElMessage({ type: 'error', message: 'error submit!' })
-    }
-  })
-}
-function resetForm(formEl) {
-  if (!formEl) return
-  formEl.resetFields()
+function resetForm() {
+  formRef.value?.resetFields()
 }
 defineExpose({ resetForm, formRef })
 </script>

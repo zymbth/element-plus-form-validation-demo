@@ -51,12 +51,12 @@ async function submitForm(formEl) {
     invalidFields = err
   })
   if (valid) {
-    ElMessage({ type: 'success', message: 'submit!' })
+    ElMessage({ type: 'success', message: '验证通过' })
   } else {
     console.log('invalidFields: ', invalidFields)
     ElMessage({
       type: 'error',
-      message: '以下信息必填：' + Object.keys(invalidFields).join('、')
+      message: '验证失败，以下信息必填：' + Object.keys(invalidFields).join('、')
     })
   }
 }

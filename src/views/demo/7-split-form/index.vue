@@ -2,10 +2,7 @@
 import { ref, reactive } from 'vue'
 import intro from './intro.md?raw'
 import MDViewer from '@/components/md-viewer.vue'
-import elementChinaAreaData from 'https://cdn.skypack.dev/element-china-area-data@5.0.2'
 import SubForm from './sub-form.vue'
-
-const regTelPhone = /(^((\+86)|(86))?(1[3-9])\d{9}$)|(^(0\d{2,3})-?(\d{7,8})$)/
 
 const count = ref(1)
 const formRef = ref()
@@ -46,20 +43,24 @@ function deleteMail(index) {
   formData.formMails.splice(index, 1)
 }
 
-function submitForm(formEl) {
+async function submitForm(formEl) {
   if (!formEl) return
-  console.log(subFormRef.value[0].formRef)
-  formEl.validate(valid => {
-    if (valid) {
-      ElMessage({ type: 'success', message: 'submit!' })
-    } else {
-      ElMessage({ type: 'error', message: 'error submit!' })
-    }
-  })
+  let valid, invalidFields
+  const forms = [formEl, ...subFormRef.value.map(r => r.formRef)].filter(Boolean)
+  await Promise.all(forms.map(form => form.validate()))
+    .then(res => (valid = true))
+    .catch(error => (invalidFields = error))
+  // console.log({ valid, invalidFields })
+  if (valid) {
+    ElMessage({ type: 'success', message: '验证通过' })
+  } else {
+    ElMessage({ type: 'error', message: '验证失败' })
+  }
 }
 function resetForm(formEl) {
   if (!formEl) return
   formEl.resetFields()
+  subFormRef.value.forEach(r => r.resetForm())
 }
 </script>
 <template>
