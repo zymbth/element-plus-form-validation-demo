@@ -4,11 +4,16 @@ import Layout from '@/layout/index.vue'
 export const routes = [
   {
     path: '/',
-    component: Layout,
     name: 'Article',
+    component: Layout,
     meta: { isMenu: true, title: 'Read list' },
     children: [
-      { path: '', meta: { title: '首页' }, component: () => import('@/views/index.vue') },
+      {
+        path: '',
+        name: 'ArticleIndex',
+        meta: { title: '首页' },
+        component: () => import('@/views/index.vue'),
+      },
       {
         path: 'form-api',
         meta: { title: '表单组件相关API' },
@@ -33,11 +38,11 @@ export const routes = [
   },
   {
     path: '/demo',
-    component: Layout,
     name: 'Demo',
+    component: Layout,
     meta: { isMenu: true, title: 'Demo list' },
     children: [
-      { path: '', component: () => import('@/views/demo/index.vue') },
+      { path: '', name: 'DemoIndex', component: () => import('@/views/demo/index.vue') },
       {
         path: 'basic',
         meta: { title: '基本示例' },
@@ -74,6 +79,11 @@ export const routes = [
         component: () => import('@/views/demo/7-split-form/index.vue'),
       },
       {
+        path: 'split-comp',
+        meta: { title: '组件拆分' },
+        component: () => import('@/views/demo/8-split-comp/index.vue'),
+      },
+      {
         path: 'simple',
         meta: { title: '极简使用' },
         component: () => import('@/views/demo/simple/index.vue'),
@@ -84,6 +94,15 @@ export const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+  // scrollBehavior: () => ({ top: 0 }),
+  scrollBehavior: () => {
+    return new Promise((resolve, reject) => {
+      // transition delay: fade-transform
+      setTimeout(() => {
+        resolve({ left: 0, top: 0 })
+      }, 200)
+    })
+  },
   routes,
 })
 

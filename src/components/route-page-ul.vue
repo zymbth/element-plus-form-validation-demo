@@ -38,3 +38,15 @@ function resolveRoutePath(...paths) {
     </li>
   </ul>
 </template>
+<style lang="scss" scoped>
+li > a {
+  display: block;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+}
+.router-link-active {
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+</style>

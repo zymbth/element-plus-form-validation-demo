@@ -2,9 +2,7 @@
 import { ref, reactive } from 'vue'
 import intro from './intro.md?raw'
 import MDViewer from '@/components/md-viewer.vue'
-import elementChinaAreaData from 'https://cdn.skypack.dev/element-china-area-data@5.0.2'
-
-const regTelPhone = /(^((\+86)|(86))?(1[3-9])\d{9}$)|(^(0\d{2,3})-?(\d{7,8})$)/
+import SubForm from './sub-form.vue'
 
 const count = ref(1)
 const formRef = ref()
@@ -29,22 +27,6 @@ const formData = reactive({
 const baseRules = {
   noMail: [{ type: 'boolean', required: true, message: '请选择是否邮寄' }],
 }
-const subFormRules = {
-  reciever: [{ required: true, message: '请选择收件人', trigger: 'blur' }],
-  recieveTel: [
-    { required: true, message: '请输入收件号码' },
-    { pattern: regTelPhone, message: '电话号码不正确' },
-  ],
-  'address.area': [
-    {
-      required: true,
-      type: 'array',
-      message: '请输入省市区',
-      defaultField: { required: true, message: '区域码错误' },
-    },
-  ],
-  'address.detail': [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
-}
 
 function addMail() {
   formData.formMails.push({
@@ -64,7 +46,7 @@ function deleteMail(index) {
 async function submitForm(formEl) {
   if (!formEl) return
   let valid, invalidFields
-  const forms = [formEl, ...subFormRef.value].filter(Boolean)
+  const forms = [formEl, ...subFormRef.value.map(r => r.formRef)].filter(Boolean)
   await Promise.all(forms.map(form => form.validate()))
     .then(res => (valid = true))
     .catch(error => (invalidFields = error))
@@ -78,17 +60,20 @@ async function submitForm(formEl) {
 function resetForm(formEl) {
   if (!formEl) return
   formEl.resetFields()
-  subFormRef.value.forEach(r => r.resetFields())
+  subFormRef.value.forEach(r => r.formRef?.resetFields())
 }
 </script>
 <template>
   <div>
-    <h3>Demo: 表单验证 - 嵌套表单</h3>
+    <h3>Demo: 表单验证 - 组件拆分</h3>
     <p>
       <i
         >可通过嵌套规则校验对象数组（<router-link to="/demo/deep-rules-array"
           >深层规则验证-数组</router-link
-        >），当数组内的对象属性较多时，可以将其拆分独立为一个嵌套的表单</i
+        >），当数组内的对象属性较多时，也可通过嵌套表单美化对象数组的校验规则（<router-link
+          to="/demo/split-form"
+          >深层规则验证-数组</router-link
+        >）。如果想更进一步得进行组件化地逻辑拆分，可以将其拆分为子组件</i
       >
     </p>
     <el-form
@@ -119,29 +104,7 @@ function resetForm(formEl) {
               <div class="btn-delete">×</div>
             </template>
           </el-popconfirm>
-          <el-form
-            :model="formData.formMails[idx]"
-            ref="subFormRef"
-            :rules="subFormRules"
-            label-position="right"
-            label-width="80px">
-            <el-form-item label="收件人" prop="reciever">
-              <el-input v-model="formMail.reciever" style="width: 200px" />
-            </el-form-item>
-            <el-form-item label="收件号码" prop="recieveTel">
-              <el-input v-model="formMail.recieveTel" placeholder="" style="width: 200px" />
-            </el-form-item>
-            <el-form-item label="收件地址" prop="address.area">
-              <div>
-                <el-cascader
-                  :options="elementChinaAreaData.regionData"
-                  v-model="formMail.address.area" />
-              </div>
-            </el-form-item>
-            <el-form-item label="详细地址" prop="address.detail">
-              <el-input v-model="formMail.address.detail" />
-            </el-form-item>
-          </el-form>
+          <SubForm v-model="formData.formMails[idx]" ref="subFormRef" />
         </div>
       </el-form-item>
       <el-form-item>

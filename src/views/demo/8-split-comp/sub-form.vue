@@ -30,10 +30,7 @@ const baseRules = {
   'address.detail': [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
 }
 
-function resetForm() {
-  formRef.value?.resetFields()
-}
-defineExpose({ resetForm, formRef })
+defineExpose({ formRef })
 </script>
 <template>
   <el-form
