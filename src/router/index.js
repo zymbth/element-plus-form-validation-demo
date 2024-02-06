@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 export const routes = [
   {
@@ -104,6 +106,24 @@ const router = createRouter({
     })
   },
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  // set page title
+  document.title = (pageTitle => {
+    if (pageTitle) {
+      return `${pageTitle} - Element Plus Form Validation Demo`
+    }
+    return 'Element Plus Form Validation Demo'
+  })(to.meta.title)
+  next()
+  NProgress.done()
+})
+
+router.afterEach(() => {
+  // finish progress bar
+  NProgress.done()
 })
 
 export default router
